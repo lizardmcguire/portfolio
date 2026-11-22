@@ -3,18 +3,19 @@
    Built from the Figma file "Projects" (Claude page).
    ========================================================== */
 
-/* AUTHENTIC Sans, the font used in Figma (files live next to this stylesheet). */
+/* ES Allianz (files live next to this stylesheet). There is no italic file,
+   so browsers slant the Regular for italic text. */
 @font-face {
-  font-family: "AUTHENTIC Sans";
-  src: url("AUTHENTICSans-90.otf") format("opentype");
+  font-family: "ES Allianz";
+  src: url("ESAllianz-Regular.woff") format("woff");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "AUTHENTIC Sans";
-  src: url("AUTHENTICSans-130.otf") format("opentype");
-  font-weight: 700;
+  font-family: "ES Allianz";
+  src: url("ESAllianz-Medium.woff") format("woff");
+  font-weight: 500 700;
   font-style: normal;
   font-display: swap;
 }
@@ -30,7 +31,8 @@
   --text: 20px;
   --small: 15px;
   --dot: #415c84;        /* overridden per page */
-  --font: "AUTHENTIC Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font: "ES Allianz", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --tracking: -1px;
 }
 
 body.page-work   { --dot: #057f0b; }
@@ -48,6 +50,7 @@ body {
   font-family: var(--font);
   font-size: var(--text);
   line-height: 1.2;
+  letter-spacing: var(--tracking);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -294,3 +297,6 @@ p + p { margin-top: 1.2em; }
 .gallery img, .press-shot img { width: 100%; height: auto; }
 .gallery + .gallery { margin-top: 12px; }
 .press-shot { margin: 12px 0 0; }
+
+/* Form controls don't inherit letter spacing by default */
+input, button { letter-spacing: inherit; }
