@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Lisa Escudero</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .gate { min-height: 100vh; display: flex; flex-direction: column; }
+    .gate main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 0 16px; }
+    .gate form { width: 100%; max-width: 320px; display: flex; flex-direction: column; gap: 12px; text-align: center; font-size: var(--small); }
+    .gate label { color: var(--muted); }
+    .gate input {
+      font: inherit; font-size: 18px; padding: 10px 12px; border: 1px solid var(--rule);
+      border-radius: 0; background: #f6f6f6; color: var(--ink); text-align: center;
+    }
+    .gate input:focus { outline: 1px solid var(--ink); outline-offset: 0; background: #fff; }
+    .gate button {
+      font: inherit; font-size: var(--small); padding: 11px 12px; border: 0; border-radius: 0;
+      background: var(--ink); color: #fff; cursor: pointer;
+    }
+    .gate button:disabled { opacity: .5; cursor: progress; }
+    .gate .error { min-height: 18px; color: #a12a2a; }
+    .gate .copyright { color: var(--muted); }
+    .gate .hidden { display: none; }
+  </style>
+</head>
+<body class="gate">
+  <header class="site-header">
+    <span class="name">Lisa Escudero</span>
+  </header>
+
+  <main>
+    <form id="gate-form" class="hidden" autocomplete="off">
+      <label for="gate-password">Password Protected</label>
+      <input id="gate-password" type="password" required autofocus>
+      <button id="gate-submit" type="submit">Submit</button>
+      <p class="error" id="gate-error" role="alert"></p>
+      <p class="copyright">© Lisa Escudero 2026</p>
+    </form>
+    <p id="gate-404" class="hidden">Page not found. <a href="index.html">Go to the home page</a></p>
+  </main>
+
+  <script id="gate-payload" type="application/json">null</script>
+  <script>
+  (function () {
+    var STORE = 'le-site-key';
+    var payload = JSON.parse(document.getElementById('gate-payload').textContent);
+    var form = document.getElementById('gate-form');
+    var input = document.getElementById('gate-password');
+    var button = document.getElementById('gate-submit');
+    var errorEl = document.getElementById('gate-error');
+
+    if (!payload) { document.getElementById('gate-404').classList.remove('hidden'); return; }
+
+    function fromB64(s) { return Uint8Array.from(atob(s), function (c) { return c.charCodeAt(0); }); }
+    function toB64(buf) { return btoa(String.fromCharCode.apply(null, new Uint8Array(buf))); }
+
+    async function decryptWithRaw(raw) {
+      var key = await crypto.subtle.importKey('raw', raw, 'AES-GCM', false, ['decrypt']);
+      var plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: fromB64(payload.iv) }, key, fromB64(payload.data));
+      return new TextDecoder().decode(plain);
+    }
+
+    function show(html) {
+      // Replace the page only once the password screen has finished loading;
+      // writing earlier would append to it instead of replacing it.
+      function swap() { document.open(); document.write(html); document.close(); }
+      if (document.readyState === 'complete') swap();
+      else window.addEventListener('load', swap, { once: true });
+    }
+
+    async function tryStored() {
+      try {
+        var saved = JSON.parse(localStorage.getItem(STORE) || 'null');
+        if (saved && saved.salt === payload.salt) {
+          show(await decryptWithRaw(fromB64(saved.key)));
+          return true;
+        }
+      } catch (e) { localStorage.removeItem(STORE); }
+      return false;
+    }
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      errorEl.textContent = '';
+      button.disabled = true;
+      button.textContent = 'Checking…';
+      try {
+        var base = await crypto.subtle.importKey('raw', new TextEncoder().encode(input.value), 'PBKDF2', false, ['deriveBits']);
+        var raw = await crypto.subtle.deriveBits(
+          { name: 'PBKDF2', salt: fromB64(payload.salt), iterations: payload.iter, hash: 'SHA-256' }, base, 256);
+        var html = await decryptWithRaw(raw);
+        localStorage.setItem(STORE, JSON.stringify({ salt: payload.salt, key: toB64(raw) }));
+        show(html);
+      } catch (err) {
+        errorEl.textContent = 'Incorrect password. Please try again.';
+        button.disabled = false;
+        button.textContent = 'Submit';
+        input.select();
+      }
+    });
+
+    tryStored().then(function (ok) {
+      if (!ok) { form.classList.remove('hidden'); input.focus(); }
+    });
+  })();
+  </script>
+</body>
+</html>
