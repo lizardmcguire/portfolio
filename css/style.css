@@ -386,3 +386,6 @@ h1, .work-head h1, .project-head h1 { letter-spacing: var(--tracking); }
 .home-row { margin-bottom: 120px; }
 .home-row .card img { width: 100%; height: auto; }
 .page-home .intro { padding-top: 100px; padding-bottom: 196px; }
+.home-row { margin-bottom: 120px; }
+.home-row .card img { width: 100%; height: auto; }
+.page-home .intro { padding-top: 100px; padding-bottom: 196px; }
