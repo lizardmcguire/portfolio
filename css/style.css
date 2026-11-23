@@ -383,3 +383,6 @@ h1, .work-head h1, .project-head h1 { letter-spacing: var(--tracking); }
 .home-intro { padding: 311px 0 23px 50%; }
 .home-intro .content { max-width: 295px; }
 @media (max-width: 760px) { .home-intro { padding: 96px var(--gutter) 64px; } .home-intro .content { max-width: none; } }
+.home-row { margin-bottom: 120px; }
+.home-row .card img { width: 100%; height: auto; }
+.page-home .intro { padding-top: 100px; padding-bottom: 196px; }
