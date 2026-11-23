@@ -3,8 +3,7 @@
    Built from the Figma file "Projects" (Claude page).
    ========================================================== */
 
-/* ES Allianz (files live next to this stylesheet). There is no italic file,
-   so browsers slant the Regular for italic text. */
+/* ES Allianz: Regular, Medium and Italic (files live next to this stylesheet). */
 @font-face {
   font-family: "ES Allianz";
   src: url("ESAllianz-Regular.woff") format("woff");
@@ -17,6 +16,14 @@
   src: url("ESAllianz-Medium.woff") format("woff");
   font-weight: 500 700;
   font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "ES Allianz";
+  src: url("ESAllianz-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
   font-display: swap;
 }
 
