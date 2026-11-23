@@ -34,7 +34,7 @@
   --small: 15px;
   --dot: #415c84;        /* overridden per page */
   --font: "ES Allianz", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --tracking: -1px;
+  --tracking: 0;
 }
 
 body.page-work   { --dot: #057f0b; }
