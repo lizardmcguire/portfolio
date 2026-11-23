@@ -316,9 +316,9 @@ h1, .work-head h1, .project-head h1 { letter-spacing: var(--tracking); }
 
 /* ---------- Prelude page (Figma frame "Frame 2", node 2766:3297) ---------- */
 .project-head .client { color: #999; }
-.page-prelude .project-head { padding-top: 114px; padding-bottom: 115px; }
-.page-prelude .project-head h1 { margin-top: 0; }
-.page-prelude .project-body { padding-top: 120px; padding-bottom: 118px; }
+.page-case .project-head { padding-top: 114px; padding-bottom: 115px; }
+.page-case .project-head h1 { margin-top: 0; }
+.page-case .project-body { padding-top: 120px; padding-bottom: 118px; }
 
 /* photo rows: images bottom-aligned on one row, captions on the row below */
 .pg { display: grid; align-items: end; row-gap: 14px; }
@@ -336,8 +336,8 @@ h1, .work-head h1, .project-head h1 { letter-spacing: var(--tracking); }
 .highlights .bullets li:last-child { margin-bottom: 0; }
 
 @media (max-width: 760px) {
-  .page-prelude .project-head { padding-top: 56px; padding-bottom: 56px; }
-  .page-prelude .project-body { padding-top: 64px; padding-bottom: 64px; }
+  .page-case .project-head { padding-top: 56px; padding-bottom: 56px; }
+  .page-case .project-body { padding-top: 64px; padding-bottom: 64px; }
   .pg, .pg-3, .pg-2, .pg-last { grid-template-columns: 1fr; padding: 0 var(--gutter); row-gap: 8px; }
   /* keep each caption directly under its own photo on phones */
   .pg figure:nth-of-type(1) { order: 1; } .pg .pg-cap:nth-of-type(1) { order: 2; margin-bottom: 24px; }
@@ -345,8 +345,36 @@ h1, .work-head h1, .project-head h1 { letter-spacing: var(--tracking); }
   .pg figure:nth-of-type(3) { order: 5; } .pg .pg-cap:nth-of-type(3) { order: 6; }
   .highlights { padding: 56px var(--gutter) 48px; }
 }
-.page-prelude .project-head > div:first-child { padding-left: 10px; }
-.page-prelude .project-head h1 { max-width: 562px; }
-.page-prelude .project-head .content { max-width: 491px; }
-.page-prelude .project-body .stack { max-width: 495px; }
-@media (max-width: 760px) { .page-prelude .project-head > div:first-child { padding-left: 0; } }
+.page-case .project-head > div:first-child { padding-left: 10px; }
+.page-case .project-head h1 { max-width: 562px; }
+.page-case .project-head .content { max-width: 491px; }
+.page-case .project-body .stack { max-width: 495px; }
+@media (max-width: 760px) { .page-case .project-head > div:first-child { padding-left: 0; } }
+
+/* ---------- Case-study photo rows (layout values come from Figma, see tools/case_studies.py) ---------- */
+.prow { display: grid; }
+.prow figure { margin: 0; }
+.prow img { display: block; width: 100%; height: auto; }
+.prow figcaption { margin-top: 9px; font-size: var(--small); line-height: 1.2; }
+.prow-centre-cap figcaption { text-align: center; }
+.prow-centre-cap { margin-bottom: 40px; }
+.page-case .project-body + .project-body { padding-top: 0; }
+@media (max-width: 760px) {
+  .prow { grid-template-columns: 1fr !important; padding-left: var(--gutter) !important; padding-right: var(--gutter) !important; row-gap: 24px; }
+}
+/* Work page first row (Figma "comms.lisaes.com/work"): large Prelude card + Creative BC */
+.work-row.w1 { grid-template-columns: 828fr 380fr; gap: 25px; padding-left: calc(19 / 1280 * 100%); padding-right: calc(28 / 1280 * 100%); align-items: end; }
+@media (max-width: 760px) { .work-row.w1 { grid-template-columns: 1fr; padding-left: var(--gutter); padding-right: var(--gutter); } }
+.page-worklist .work-row { align-items: end; }
+
+/* About + Index (Figma "comms.lisaes.com/about", "/index"): larger labels, no divider lines */
+.page-about .label, .page-cv .label { font-size: 20px; }
+.page-about .section, .page-cv .section { border-top: 0; padding-top: 100px; padding-bottom: 100px; }
+.page-about main > .section:first-child, .page-cv main > .section:first-child { padding-top: 100px; }
+
+/* 404 page (Figma "comms.lisaes.com/404") */
+.notfound { padding: 108px 17px 0; min-height: calc(100vh - 66px - 160px); }
+.notfound .nf-code { margin: 0; font-size: 24px; color: #a7a7a7; }
+.notfound h1 { margin: 217px 0 0; font-size: 44px; font-weight: 400; line-height: 1; }
+.notfound .nf-home { margin-top: 24px; font-size: var(--small); color: var(--muted); }
+@media (max-width: 760px) { .notfound h1 { margin-top: 96px; font-size: 32px; } }
