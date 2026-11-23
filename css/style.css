@@ -313,3 +313,40 @@ input, button { letter-spacing: inherit; }
 
 /* Headings keep the tighter -1px tracking; body text is 0 */
 h1, .work-head h1, .project-head h1 { letter-spacing: var(--tracking); }
+
+/* ---------- Prelude page (Figma frame "Frame 2", node 2766:3297) ---------- */
+.project-head .client { color: #999; }
+.page-prelude .project-head { padding-top: 114px; padding-bottom: 115px; }
+.page-prelude .project-head h1 { margin-top: 0; }
+.page-prelude .project-body { padding-top: 120px; padding-bottom: 118px; }
+
+/* photo rows: images bottom-aligned on one row, captions on the row below */
+.pg { display: grid; align-items: end; row-gap: 14px; }
+.pg figure { margin: 0; }
+.pg img { display: block; width: 100%; height: auto; cursor: default; }
+.pg-cap { margin: 0; align-self: start; font-size: var(--small); line-height: 1.2; }
+.pg-3 { grid-template-columns: 309fr 581fr 284fr; column-gap: 28px; padding: 0 30px 0 21px; }
+.pg-2 { grid-template-columns: 591fr 602fr; column-gap: 24px; padding: 0 31px 0 32px; }
+.pg-last { grid-template-columns: 598fr 597fr; column-gap: 16px; padding: 0 37px 0 32px; }
+
+.highlights { padding: 106px var(--gutter) 78px calc(347 / 1280 * 100%); }
+.highlights h2 { margin: 0 0 12px; font-size: var(--small); font-weight: 400; color: #999; }
+.highlights .bullets { margin: 0; padding-left: 16px; max-width: 600px; line-height: 1.15; }
+.highlights .bullets li { margin-bottom: 22px; }
+.highlights .bullets li:last-child { margin-bottom: 0; }
+
+@media (max-width: 760px) {
+  .page-prelude .project-head { padding-top: 56px; padding-bottom: 56px; }
+  .page-prelude .project-body { padding-top: 64px; padding-bottom: 64px; }
+  .pg, .pg-3, .pg-2, .pg-last { grid-template-columns: 1fr; padding: 0 var(--gutter); row-gap: 8px; }
+  /* keep each caption directly under its own photo on phones */
+  .pg figure:nth-of-type(1) { order: 1; } .pg .pg-cap:nth-of-type(1) { order: 2; margin-bottom: 24px; }
+  .pg figure:nth-of-type(2) { order: 3; } .pg .pg-cap:nth-of-type(2) { order: 4; margin-bottom: 24px; }
+  .pg figure:nth-of-type(3) { order: 5; } .pg .pg-cap:nth-of-type(3) { order: 6; }
+  .highlights { padding: 56px var(--gutter) 48px; }
+}
+.page-prelude .project-head > div:first-child { padding-left: 10px; }
+.page-prelude .project-head h1 { max-width: 562px; }
+.page-prelude .project-head .content { max-width: 491px; }
+.page-prelude .project-body .stack { max-width: 495px; }
+@media (max-width: 760px) { .page-prelude .project-head > div:first-child { padding-left: 0; } }
